@@ -3,9 +3,14 @@ Overview
 This API powers the Algo Bharat movie ticket booking system, deployed and live at https://movie-ticket-booking-2-f1ez.onrender.com/. It provides endpoints for managing movies, theaters, halls, seats, shows, bookings, suggestions, analytics, and seat availability.
 Endpoints
 
-POST /api/v1/movies: Create a new movie.
+
+
+1> POST /api/v1/movies: Create a new movie.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/movies
+
 Body: {
   "title": "Octopus",
   "durationMinutes": 148,
@@ -17,10 +22,14 @@ Body: {
 Response: 200 Created with the movie object (e.g., [{"id":1,"title":"Octopus","durationMinutes":148,"description":"A mind-bending thriller","basePrice":10.00}]).
 
 
-POST /api/v1/theaters: Create a new theater.
+2> POST /api/v1/theaters: Create a new theater.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/theaters
+
 Headers: Content-Type: application/json
+
 Body: {
   "name": "Asian Cinema",
   "address": "Pune"
@@ -30,10 +39,14 @@ Body: {
 Response: 200 Created with the theater object.
 
 
-POST /api/v1/theaters/{theaterId}/halls: Create a new hall for a theater.
+3> POST /api/v1/theaters/{theaterId}/halls: Create a new hall for a theater.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/theaters/{theaterId}/halls
-Headers: Content-Type: application/json, Authorization: Basic YWRtaW46YWRtaW4=
+
+Headers: Content-Type: application/json
+
 Body: {
   "name": "Hall A",
   "theater": {
@@ -47,10 +60,14 @@ Body: {
 Response: 200 Created with the hall object.
 
 
-POST /api/v1/theaters/halls/{hallId}/rows: Add rows to a hall.
+4> POST /api/v1/theaters/halls/{hallId}/rows: Add rows to a hall.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/theaters/halls/{hallId}/rows
+
 Headers: Content-Type: application/json
+
 Body: {
   "rowNumber": 1,
   "seatCount": 6
@@ -60,18 +77,27 @@ Body: {
 Response: 200 Created with the row details.
 
 
-POST /api/v1/theaters/halls/{hallId}/generateSeats: Generate seats for a hall.
+5> POST /api/v1/theaters/halls/{hallId}/generateSeats: Generate seats for a hall.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/theaters/halls/{hallId}/generateSeats
+
 Headers: Content-Type: application/json
+
 Body: (No body required)
+
 Response: 200 OK with seat generation status.
 
 
-POST /api/v1/shows: Create a new show.
+6> POST /api/v1/shows: Create a new show.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/shows
+
 Headers: Content-Type: application/json
+
 Body: {
   "movie": {
     "id": 1
@@ -88,10 +114,14 @@ Body: {
 Response: 200 Created with the show object (e.g., [{"hall":"Hall A","seatLabels":["R1-S4","R1-S5","R1-S6"],"startAt":"2025-10-01T18:00:00","showId":1}]).
 
 
-POST /api/v1/bookings: Book tickets for a show.
+7> POST /api/v1/bookings: Book tickets for a show.
+
 Method: POST
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/bookings
+
 Headers: Content-Type: application/json
+
 Body: {
   "showId": 1,
   "numSeats": 3,
@@ -102,24 +132,34 @@ Body: {
 Response: 200 OK with booking details.
 
 
-GET /api/v1/shows/{showId}/suggestions: Get alternative show suggestions.
+8> GET /api/v1/shows/{showId}/suggestions: Get alternative show suggestions.
+
 Method: GET
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/shows/{showId}/suggestions?groupSize={groupSize}&timeWindowMinutes=120
+
 Query Params: groupSize={groupSize}, timeWindowMinutes=120
+
 Response: 200 OK with suggestion list.
 
 
-GET /api/v1/analytics/movie/{movieId}: Get movie analytics.
+9> GET /api/v1/analytics/movie/{movieId}: Get movie analytics.
+
 Method: GET
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/analytics/movie/{movieId}?from=2025-09-28&to=2025-09-29
+
 Query Params: from=2025-09-28, to=2025-09-29
+
 Response: 200 OK with analytics data (e.g., {"ticketsSold":0,"from":"2025-09-28","to":"2025-09-29","movieId":1,"gmv":0}).
 
 
-GET /api/v1/theaters/halls/{hallid}/seats: Get available seats for a hall.
+10> GET /api/v1/theaters/halls/{hallid}/seats: Get available seats for a hall.
+
 Method: GET
+
 URL: https://movie-ticket-booking-2-f1ez.onrender.com/api/v1/theaters/halls/{hallid}/seats
-Headers: Authorization: Basic YWRtaW46YWRtaW4=
+
 Response: 200 OK with seat availability data (e.g., [] if no seats).
 
 
