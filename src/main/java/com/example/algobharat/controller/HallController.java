@@ -3,12 +3,16 @@ package com.example.algobharat.controller;
 import com.example.algobharat.model.Hall;
 import com.example.algobharat.model.HallRow;
 import com.example.algobharat.model.Seat;
-// import com.example.algobharat.repository.HallRepository;
+import com.example.algobharat.repository.HallRepository;
+import com.example.algobharat.repository.SeatRepository;
 import com.example.algobharat.service.HallService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,8 +20,9 @@ import java.util.List;
 @RequestMapping("/api/v1/theaters")
 @RequiredArgsConstructor
 public class HallController {
-    // private final HallRepository hallRepository;
+    private final HallRepository hallRepository;
     private final HallService hallService;
+    private final SeatRepository seatRepository;
 
     @PostMapping("/{theaterId}/halls")
     public ResponseEntity<Hall> addHall(@PathVariable Long theaterId, @RequestBody Hall hall) {
@@ -40,8 +45,9 @@ public class HallController {
 
     @GetMapping("/halls/{hallId}/seats")
     public ResponseEntity<List<Seat>> viewSeats(@PathVariable Long hallId) {
-        List<Seat> seats = hallService.generateSeats(hallId); // lightweight: to ensure seats exist, otherwise use seat
-                                                              // repo directly
+        hallRepository.findById(hallId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Hall not found"));
+        List<Seat> seats = seatRepository.findByHallIdOrderByRowNumberAscSeatNumberAsc(hallId);
         return ResponseEntity.ok(seats);
     }
 
